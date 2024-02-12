@@ -5,7 +5,7 @@ from flask import Flask, render_template, request
 # Variáveis Globais
 # //////////////////////////////////////////////////////////
 app = Flask(__name__)
-df = pd.read_excel("catalogo_disciplinas_graduacao_2022_2023_3010.xlsx")
+df = pd.read_excel("AnaliseDisciplinas\catalogo_disciplinas_graduacao_2022_2023_3010.xlsx")
 
 
 # Classe Disciplina
@@ -29,7 +29,7 @@ class Disciplina:
             lista_ementa.append(assunto)
 
         return lista_ementa
-    
+
 
 # Busca o índice da disciplina na tabela
 # //////////////////////////////////////////////////////////
@@ -45,10 +45,13 @@ def pegar_índice(nome):
 def home():
     if request.method == "POST":
         nome_disciplina = request.form["campo_disciplina"]
-        indice = pegar_índice(nome_disciplina)
-        disciplina = Disciplina(indice)
+        try:
+            indice = pegar_índice(nome_disciplina)
+            disciplina = Disciplina(indice)
+        except:
+            return render_template("index.html", placeholder="Disciplina não encontrada")
 
-        return render_template("index.html", placeholder=disciplina.nome, tpei=disciplina.tpei, codigo=disciplina.sigla, concluida=disciplina.concluida, recomendacao=disciplina.recomendacao, ementa=disciplina.ementa_formatada())
+        return render_template("index.html", placeholder=disciplina.nome, tpei=disciplina.tpei, codigo=disciplina.sigla, concluida=disciplina.concluida, recomendacao=disciplina.recomendacao, ementa=disciplina.ementa_formatada(), objetivos=disciplina.objetivos)
         
     return render_template("index.html", placeholder="Digite o nome da disciplina")
 
