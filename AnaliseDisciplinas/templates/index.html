@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <title>Consultar disciplina</title>
+</head>
+
+<body>
+    <header>
+        <div class="top">
+            <div class="info info__search">
+                <form action="{{url_for('home')}}" method="POST">
+                    <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina">
+                </form>
+            </div>
+            <div class="info">
+                <div class="info__title">
+                    <span>TPEI</span>
+                </div>
+                <div class="info__data">
+                    <span>{{tpei}}</span>
+                </div>
+            </div>
+            <div class="info">
+                <div class="info__title">
+                    <span>Código</span>
+                </div>
+                <div class="info__data">
+                    <span>{{codigo}}</span>
+                </div>
+            </div>
+            <div class="info">
+                <div class="info__title">
+                    <span>Concluída</span>
+                </div>
+                <div class="info__data">
+                    <span>{{concluida}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <div class="info__title">
+                <span>Recomendações</span>
+            </div>
+            <div class="info__data info__recommendation">
+                <span>{{recomendacao}}</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="main__left">
+            <div class="main__content left">
+                <div class="title">
+                    <span>Ementa</span>
+                </div>
+                <div class="content">
+                    {% for topic in ementa %}
+                    <span>{{topic}}</span>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="main__right">
+            <div class="main__content">
+                <div class="title">
+                    <span>Objetivos</span>
+                </div>
+                <div class="content">
+                    <span>Samalama</span>
+                </div>
+            </div>
+            <div class="main__content">
+                <div class="title">
+                    <span>Bibliografia Básica</span>
+                </div>
+                <div class="content books">
+                    <span>Samalama</span>
+                </div>
+            </div>
+            <div class="main__content">
+                <div class="title">
+                    <span>Bibliografia Complementar</span>
+                </div>
+                <div class="content books">
+                    <span>Samalama</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
