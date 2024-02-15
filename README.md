@@ -10,10 +10,12 @@
 
 - Procurar sobre a biblioteca plotly;
 
+- Procurar sobre a biblioteca Networkx;
+
 - Adicionar a visualização de dependência entre disciplinas utilizando grafos;
 
 - Adicionar forma de alterar a conclusão da disciplina (concluída ou não concluída);
 
-- Melhorar a forma como a disciplina é pesquisada.
+- Melhorar a forma como a disciplina é pesquisada;
 
-- Melhorar o design da aplicação;
+- Melhorar o design da aplicação.
