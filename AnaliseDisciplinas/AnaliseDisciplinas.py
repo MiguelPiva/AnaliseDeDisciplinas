@@ -1,4 +1,4 @@
-import pandas as pd, plotly.graph_objects as go, networkx as nx
+import pandas as pd, plotly.graph_objects as go, networkx as nx, math
 from flask import Flask, render_template, request
 
 
@@ -31,80 +31,79 @@ class Disciplina:
         return lista_ementa
 
 
+# Procura disciplinas que recomendam fazer a disciplina passada como parâmetro
+# //////////////////////////////////////////////////////////
+def procurar_dependencias(nome):
+    dependencias = []
+    num_linhas = len(df) - 1
+
+    for num in range(0, num_linhas):
+        if nome in df.loc[num, "RECOMENDAÇÃO"]:
+            dependencias.append(df.loc[num, "DISCIPLINA"])
+
+    return dependencias
+
+
 # Cria grafo de dependências
 # //////////////////////////////////////////////////////////
-def criar_grafo():
-    ''' Testando a criação de um grafo '''
-    G = nx.random_geometric_graph(200, 0.125)
+def criar_grafo(nome):
+    G = nx.DiGraph()
+    dependem_de_nome = procurar_dependencias(nome)
+    posicao = 0
+    ajuste = 1
 
-    edge_x = []
-    edge_y = []
-    for edge in G.edges():
-        x0, y0 = G.nodes[edge[0]]['pos']
-        x1, y1 = G.nodes[edge[1]]['pos']
-        edge_x.append(x0)
-        edge_x.append(x1)
-        edge_x.append(None)
-        edge_y.append(y0)
-        edge_y.append(y1)
-        edge_y.append(None)
+    G.add_node(nome)
+    G.nodes[nome]["pos"] = (0,0)
+    for disciplina in dependem_de_nome:
+        G.add_node(disciplina)
+        G.nodes[disciplina]["pos"] = (ajuste*math.cos(posicao+ajuste), ajuste*math.sin(posicao+ajuste))
+        G.add_edge(disciplina, nome)
 
-    edge_trace = go.Scatter(
-        x=edge_x, y=edge_y,
-        line=dict(width=0.5, color='#888'),
-        hoverinfo='none',
-        mode='lines')
-
-    node_x = []
-    node_y = []
-    for node in G.nodes():
-        x, y = G.nodes[node]['pos']
-        node_x.append(x)
-        node_y.append(y)
+        ajuste = ajuste + 1.3 if posicao > 5.7 else ajuste
+        posicao = posicao + 0.3 if posicao < 5.7 else 0
 
     node_trace = go.Scatter(
-        x=node_x, y=node_y,
-        mode='markers',
-        hoverinfo='text',
-        marker=dict(
-            showscale=True,
-            # colorscale options
-            #'Greys' | 'YlGnBu' | 'Greens' | 'YlOrRd' | 'Bluered' | 'RdBu' |
-            #'Reds' | 'Blues' | 'Picnic' | 'Rainbow' | 'Portland' | 'Jet' |
-            #'Hot' | 'Blackbody' | 'Earth' | 'Electric' | 'Viridis' |
-            colorscale='YlGnBu',
-            reversescale=True,
-            color=[],
-            size=10,
-            colorbar=dict(
-                thickness=15,
-                title='Node Connections',
-                xanchor='left',
-                titleside='right'
-            ),
-            line_width=2))
-    
+        x=[G.nodes[node]["pos"][0] for node in G.nodes()],
+        y=[G.nodes[node]["pos"][1] for node in G.nodes()],
+        mode="markers",
+        marker=dict(size=20, colorscale="Blues"),
+        text=[node for node in G.nodes()],
+    )
+
     node_adjacencies = []
     node_text = []
     for node, adjacencies in enumerate(G.adjacency()):
         node_adjacencies.append(len(adjacencies[1]))
-        node_text.append('# of connections: '+str(len(adjacencies[1])))
 
     node_trace.marker.color = node_adjacencies
-    node_trace.text = node_text
 
-    fig = go.Figure(data=[edge_trace, node_trace],
-             layout=go.Layout(
-                title='<br>Network graph made with Python',
-                titlefont_size=16,
-                showlegend=False,
-                hovermode='closest',
-                margin=dict(b=20,l=5,r=5,t=40),
-                xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                yaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-                paper_bgcolor = 'rgba(0,0,0,0)',
-                plot_bgcolor = 'rgba(0,0,0,0)'
-                ))
+    arestas_x = []
+    arestas_y = []
+    for aresta in G.edges():
+        x0, y0 = G.nodes[aresta[0]]['pos']
+        x1, y1 = G.nodes[aresta[1]]['pos']
+        arestas_x.append(x0)
+        arestas_x.append(x1)
+        arestas_x.append(None)
+        arestas_y.append(y0)
+        arestas_y.append(y1)
+        arestas_y.append(None)
+
+    edge_trace = go.Scatter(
+        x = arestas_x,
+        y = arestas_y,
+        mode="lines"
+    )  
+
+    fig = go.Figure(data=[edge_trace, node_trace], 
+                    layout=go.Layout(
+                        paper_bgcolor = 'rgba(0,0,0,0)',
+                        plot_bgcolor = 'rgba(0,0,0,0)',
+                        margin=dict(b=5,l=5,r=5,t=5),
+                        showlegend=False,
+                        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
+                        yaxis=dict(showgrid=False, zeroline=False, showticklabels=False)
+                    ))
     
     return fig.to_html()
 
@@ -138,7 +137,7 @@ def home():
                                recomendacao=disciplina.recomendacao, 
                                ementa=disciplina.ementa_formatada(), 
                                objetivos=disciplina.objetivos,
-                               grafo = criar_grafo()
+                               grafo = criar_grafo(disciplina.nome)
                                )
         
     return render_template("index.html", placeholder="Digite o nome da disciplina")

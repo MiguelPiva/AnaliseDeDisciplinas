@@ -4,15 +4,17 @@
 
 - Flask;
 
-- Pandas.
+- Math;
+
+- Networkx;
+
+- Pandas;
+
+- plotly.graph_objects.
 
 <h2>Afazeres</h2>
 
-- Procurar sobre a biblioteca plotly;
-
-- Procurar sobre a biblioteca Networkx;
-
-- Adicionar a visualização de dependência entre disciplinas utilizando grafos;
+- Deixar a visualização de dependências mais eficiente;
 
 - Adicionar forma de alterar a conclusão da disciplina (concluída ou não concluída);
 
