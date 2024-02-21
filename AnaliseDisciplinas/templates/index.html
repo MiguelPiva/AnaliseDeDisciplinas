@@ -79,10 +79,12 @@
             </div>
             <div class="main__content">
                 <div class="title">
-                    <span>Visualização de dependências</span>
+                    <span>Recomendam {{placeholder}}</span>
                 </div>
-                <div class="content">
-                    <span>{{ grafo|safe }}</span>
+                <div class="content recomendam">
+                    {% for disciplina in recomendam %}
+                    <li>{{disciplina}}</li>
+                    {% endfor %}
                 </div>
             </div>
         </div>

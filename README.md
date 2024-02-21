@@ -4,17 +4,11 @@
 
 - Flask;
 
-- Math;
-
-- Networkx;
-
 - Pandas;
-
-- plotly.graph_objects.
 
 <h2>Afazeres</h2>
 
-- Deixar a visualização de dependências mais eficiente;
+- Melhorar a formatação das saídas;
 
 - Adicionar forma de alterar a conclusão da disciplina (concluída ou não concluída);
 
