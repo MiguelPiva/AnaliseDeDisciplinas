@@ -43,6 +43,24 @@ class Disciplina:
         return recomendam
 
 
+#Pega o nome de todas as disciplinas
+# //////////////////////////////////////////////////////////
+def listar_disciplinas():
+    try:
+        len(disciplinas) > 0
+        print("Disciplinas já foram listadas")
+
+    except:
+        disciplinas = []
+        num_linhas = len(df) - 1
+
+        for indice in range(0, num_linhas):
+            disciplinas.append(df.loc[indice, "DISCIPLINA"])
+        print("Disciplinas listadas")
+
+    return disciplinas
+
+
 # Busca o índice da disciplina na tabela do Excel
 # //////////////////////////////////////////////////////////
 def pegar_índice(nome):
@@ -72,10 +90,11 @@ def home():
                                recomendacao=disciplina.recomendacao, 
                                ementa=disciplina.ementa_formatada(), 
                                objetivos=disciplina.objetivos,
-                               recomendam=disciplina.procurar_recomendam()
+                               recomendam=disciplina.procurar_recomendam(),
+                               disciplinas=listar_disciplinas()
                                )
         
-    return render_template("index.html", placeholder="Digite o nome da disciplina")
+    return render_template("index.html", placeholder="Digite o nome da disciplina", disciplinas=listar_disciplinas())
 
 
 # Inicia o Flask

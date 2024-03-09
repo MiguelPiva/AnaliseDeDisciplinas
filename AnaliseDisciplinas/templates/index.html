@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">   
+    </script>   
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">   
+    </script> 
 
     <title>Consultar disciplina</title>
 </head>
@@ -14,8 +18,20 @@
         <div class="top">
             <div class="info info__search">
                 <form action="{{url_for('home')}}" method="POST">
-                    <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina">
+                    <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina" id="tags" autocomplete="family-name">
                 </form>
+                <script> 
+                    $( function() { 
+                        var availableTags = [ 
+                            {% for disciplina in disciplinas %} 
+                                "{{disciplina}}", 
+                            {% endfor %} 
+                        ]; 
+                        $( "#tags" ).autocomplete({ 
+                            source: availableTags 
+                        }); 
+                    } ); 
+                </script> 
             </div>
             <div class="info">
                 <div class="info__title">
@@ -79,7 +95,11 @@
             </div>
             <div class="main__content">
                 <div class="title">
+                    {% if  placeholder != "Digite o nome da disciplina" %}
                     <span>Recomendam {{placeholder}}</span>
+                    {% else %}
+                    <span>Recomendam</span>
+                    {% endif %}
                 </div>
                 <div class="content recomendam">
                     {% for disciplina in recomendam %}
