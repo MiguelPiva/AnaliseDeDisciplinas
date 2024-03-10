@@ -6,6 +6,7 @@ from flask import Flask, render_template, request
 # //////////////////////////////////////////////////////////
 app = Flask(__name__)
 df = pd.read_excel("AnaliseDisciplinas\catalogo_disciplinas_graduacao_2022_2023_3010.xlsx")
+lista_disciplinas = []
 
 
 # Classe Disciplina
@@ -23,6 +24,11 @@ class Disciplina:
         self.concluida = df.loc[indice, "FEITO"]
 
 
+    def recomendacao_formatada(self):
+        recomendacao = self.recomendacao.replace(";", ",")
+
+        return recomendacao
+
     def ementa_formatada(self):
         lista_ementa = []
         ementa = self.ementa.replace(".", "\n")
@@ -30,6 +36,13 @@ class Disciplina:
             lista_ementa.append(assunto)
 
         return lista_ementa
+
+
+    def objetivos_formatados(self):
+        if str(self.objetivos) == "nan" or str(self.objetivos) == "":
+            return "Não há objetivos cadastrados para esta disciplina"
+        else:
+            return self.objetivos
 
 
     def procurar_recomendam(self):
@@ -40,25 +53,22 @@ class Disciplina:
             if self.nome in df.loc[num, "RECOMENDAÇÃO"]:
                 recomendam.append(df.loc[num, "DISCIPLINA"])
 
+        if len(recomendam) == 0 or recomendam[0] == "nan": 
+            return ["Não há disciplinas que recomendam esta disciplina"]
+
         return recomendam
 
 
 #Pega o nome de todas as disciplinas
 # //////////////////////////////////////////////////////////
 def listar_disciplinas():
-    try:
-        len(disciplinas) > 0
-        print("Disciplinas já foram listadas")
+    num_linhas = len(df) - 1
 
-    except:
-        disciplinas = []
-        num_linhas = len(df) - 1
+    for indice in range(0, num_linhas):
+        lista_disciplinas.append(df.loc[indice, "DISCIPLINA"])
+    print("Disciplinas listadas")
 
-        for indice in range(0, num_linhas):
-            disciplinas.append(df.loc[indice, "DISCIPLINA"])
-        print("Disciplinas listadas")
-
-    return disciplinas
+    return lista_disciplinas
 
 
 # Busca o índice da disciplina na tabela do Excel
@@ -87,17 +97,21 @@ def home():
                                tpei=disciplina.tpei, 
                                codigo=disciplina.sigla, 
                                concluida=disciplina.concluida, 
-                               recomendacao=disciplina.recomendacao, 
+                               recomendacao=disciplina.recomendacao_formatada(), 
                                ementa=disciplina.ementa_formatada(), 
-                               objetivos=disciplina.objetivos,
+                               objetivos=disciplina.objetivos_formatados(),
                                recomendam=disciplina.procurar_recomendam(),
-                               disciplinas=listar_disciplinas()
+                               disciplinas=lista_disciplinas
                                )
         
-    return render_template("index.html", placeholder="Digite o nome da disciplina", disciplinas=listar_disciplinas())
+    return render_template("index.html",
+                            placeholder="Digite o nome da disciplina",
+                            disciplinas=lista_disciplinas
+                            )
 
 
-# Inicia o Flask
+# Inicia a aplicação
 # //////////////////////////////////////////////////////////
 if __name__ == "__main__":
+    listar_disciplinas()
     app.run(debug=True, host = "0.0.0.0", port=80) 

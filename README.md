@@ -4,11 +4,9 @@
 
 - Flask;
 
-- Pandas;
+- Pandas.
 
 <h2>Recursos adicionais utilizados:</h2>
-
-- JavaScript;
 
 - JQuery.
 
