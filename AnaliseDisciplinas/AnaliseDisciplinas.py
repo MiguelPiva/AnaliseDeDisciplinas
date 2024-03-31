@@ -25,9 +25,12 @@ class Disciplina:
 
 
     def recomendacao_formatada(self):
-        recomendacao = self.recomendacao.replace(";", ",")
+        recomendacao = self.recomendacao.split(";")
+        for disciplina in range(len(recomendacao)):
+            recomendacao[disciplina] = recomendacao[disciplina].strip()
 
         return recomendacao
+
 
     def ementa_formatada(self):
         lista_ementa = []
@@ -90,7 +93,10 @@ def home():
             indice = pegar_índice(nome_disciplina)
             disciplina = Disciplina(indice)
         except:
-            return render_template("index.html", placeholder="Disciplina não encontrada")
+            return render_template("index.html",
+                                   placeholder="Disciplina não encontrada",
+                                   disciplinas=lista_disciplinas
+                                   )
 
         return render_template("index.html", 
                                placeholder=disciplina.nome, 

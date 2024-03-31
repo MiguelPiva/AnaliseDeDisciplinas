@@ -5,33 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js">   
-    </script>   
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js">   
-    </script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>   
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script> 
 
     <title>Consultar disciplina</title>
 </head>
 
 <body>
-    <header>
+    <div class="sidebar">
+        <form action="{{url_for('home')}}" method="POST">
+            <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina" autocomplete="family-name" id="tags">
+        </form>
+        <div class="list-field" id="list-field"></div>
+        <script class="autocomplete-list"> 
+            $( function() { 
+                var availableTags = [ 
+                    {% for disciplina in disciplinas %} 
+                        "{{ disciplina }}", 
+                    {% endfor %}
+                ]; 
+                $( "#tags" ).autocomplete({ 
+                    source: availableTags,
+                    appendTo: "#list-field",
+                });
+            }); 
+        </script>
+
+        <div class="info">
+            <div class="info__subject">
+                <span>Código: </span>
+                <span>{{codigo}}</span>
+            </div>
+            <div class="info__subject">
+                <span>TPEI: </span>
+                <span>{{tpei}}</span>
+            </div>
+            <div class="info__subject">
+                <span>Concluída: </span>
+                <span>{{concluida}}</span>
+            </div>
+            <div class="info__subject info__recommendation">
+                <span>Recomendações: </span>
+                <ul>
+                    {% for disciplina in recomendacao %}
+                    <li>{{disciplina}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- <header>
         <div class="top">
             <div class="info info__search">
-                <form action="{{url_for('home')}}" method="POST">
-                    <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina" id="tags" autocomplete="family-name">
-                </form>
-                <script> 
-                    $( function() { 
-                        var availableTags = [ 
-                            {% for disciplina in disciplinas %} 
-                                "{{disciplina}}", 
-                            {% endfor %} 
-                        ]; 
-                        $( "#tags" ).autocomplete({ 
-                            source: availableTags 
-                        }); 
-                    } ); 
-                </script> 
+                
+                <div class="list-container">
+                    <div class="list-field" id="list-field"></div>
+                </div>
+                
             </div>
             <div class="info">
                 <div class="info__title">
@@ -108,6 +138,6 @@
                 </div>
             </div>
         </div>
-    </main>
+    </main> -->
 </body>
 </html>

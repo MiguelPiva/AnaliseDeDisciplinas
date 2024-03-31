@@ -3,10 +3,51 @@ body{
     color: rgb(255, 255, 255, 100%);
     font-family: "DM Sans", sans-serif;
     font-size: 21px;
-    height: 95vh;
 }
 
-header{
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    background-color: #000000;
+    width: 350px;
+    padding: 0px 10px 20px 10px;
+}
+
+.sidebar .list-field{
+    height: 500px;
+    width: 350px;
+    gap: 50px;
+    font-size: 16px;
+    overflow-y: auto;
+    text-overflow: ellipsis;
+}
+
+.autocomplete-item {
+    margin-bottom: 10px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 30px;
+}
+
+.info .info__subject {
+    
+}
+
+.info .info__recommendation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info .info__recommendation ul {
+    list-style-type: square;
+    list-style-position: inside;
+}
+/* header{
     display: grid;
     grid-template-rows: 1fr 1fr;
     margin: 20px 80px 10px 80px;
@@ -48,7 +89,7 @@ header .info__data{
 header .top .info__search{
     display: flex;
     justify-content: center;
-    background-color: rgb(152, 255, 206, 45%);
+    background-color: rgb(74, 125, 97);
 }
 
 header .top .info__search input{
@@ -58,7 +99,29 @@ header .top .info__search input{
     white-space: nowrap;
     width: 100%;
 }  
- 
+
+header .top .list-container{
+    position: absolute;
+    display: flex;
+    justify-content: right;
+    align-items:start;
+    z-index: 100;
+}
+
+header .top .list-field{
+    top: 80px;
+    left: 110px;
+    white-space: nowrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 900px;
+    text-overflow:clip;
+    background-color: rgb(74, 125, 97);
+    padding-right: 40px;
+    color: black;
+    size: 60px;
+}
+
 header .bottom{
     display: flex;
     align-items: center;
@@ -124,4 +187,4 @@ main .left{
 
 main .recomendam{
     padding-left: 20px; 
-}
+ } */
