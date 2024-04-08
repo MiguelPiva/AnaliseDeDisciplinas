@@ -54,6 +54,38 @@
             </div>
         </div>
     </div>
+    <main>
+        <div class="top-content">
+            <div class="top-content__title">
+                <span>Objetivos</span>
+            </div>
+            <div class="top-content__text">
+                <span>{{objetivos}}</span>
+            </div>
+        </div>
+        <div class="box">
+            <div class="content">
+                <div class="content__title">
+                    <span>Ementa</span>
+                </div>
+                <div class="content__text content__box">
+                    {% for topic in ementa %}
+                    <span>{{topic}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="content">
+                <div class="content__title">
+                    <span>Recomendam</span>
+                </div>
+                <div class="content__text">
+                    {% for disciplina in recomendam %}
+                    <span>{{disciplina}}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
     <!-- <header>
         <div class="top">
             <div class="info info__search">

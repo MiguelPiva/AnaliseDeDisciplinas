@@ -1,20 +1,24 @@
 body{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
     background-color: #0B1308;
-    color: rgb(255, 255, 255, 100%);
+    color: rgb(255, 255, 255);
     font-family: "DM Sans", sans-serif;
     font-size: 21px;
 }
 
-.sidebar{
+body .sidebar{
     display: flex;
     flex-direction: column;
     background-color: #000000;
     width: 350px;
     padding: 0px 10px 20px 10px;
+    height: 900px;
 }
 
-.sidebar .list-field{
-    height: 500px;
+body .sidebar .list-field{
+    height: 400px;
     width: 350px;
     gap: 50px;
     font-size: 16px;
@@ -22,31 +26,80 @@ body{
     text-overflow: ellipsis;
 }
 
-.autocomplete-item {
+body .autocomplete-item {
     margin-bottom: 10px;
 }
 
-.info {
+body .info {
     display: flex;
     flex-direction: column;
     gap: 15px;
     padding-top: 30px;
 }
 
-.info .info__subject {
+/* .info .info__subject {
     
-}
+} */
 
-.info .info__recommendation {
+body .info .info__recommendation {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.info .info__recommendation ul {
+body .info .info__recommendation ul {
     list-style-type: square;
     list-style-position: inside;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
 }
+
+main{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+}
+
+main .content, main .top-content{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    background-color: #0b3110;
+}
+
+main .content .content__title, main .top-content .top-content__title{
+    font-size: 27px;
+}
+
+main .top-content{
+    text-align: justify;
+    height: 186px;
+}
+
+main .content .content__text{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    overflow-y: auto;
+}
+
+main .box{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 740px;
+    gap: 20px;
+}
+
+
+/* main .content__title{
+    
+} */
+
+/* main .content__text{
+    
+} */
 /* header{
     display: grid;
     grid-template-rows: 1fr 1fr;
