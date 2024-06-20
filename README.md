@@ -4,7 +4,9 @@
 
 - Flask;
 
-- Pandas.
+- pathlib;
+
+- sqlite3.
 
 <h2>Recursos adicionais utilizados:</h2>
 
