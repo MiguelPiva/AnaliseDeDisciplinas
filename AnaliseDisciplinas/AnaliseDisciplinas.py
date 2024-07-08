@@ -17,6 +17,7 @@ tupla_disciplinas = tuple()
 # //////////////////////////////////////////////////////////
 class Disciplina:
     def __init__(self, indice) -> None:
+        self.indice = indice
         disciplina = cursor.execute(
             "SELECT * FROM disciplinas WHERE id = (?);", (indice,)
         ).fetchone()
@@ -62,6 +63,12 @@ class Disciplina:
         
     def conclusao_formatada(self) -> str:
         return "Sim" if self.concluida == "S" else "Não"
+    
+    def alterar_conclusao(self) -> None:
+        conclusao = "S" if self.concluida == "N" else "N"
+        cursor.execute("UPDATE disciplinas SET concluida = (?) WHERE id = (?);", (conclusao, self.indice))
+        conexao.commit()
+        return
 
 
 # Lista o nome de todas as disciplinas do banco de dados
@@ -89,11 +96,26 @@ def pegar_indice(nome) -> int:
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
-        nome_disciplina = request.form["campo_disciplina"]
+        alterar_conclusao = False
 
+        if "campo_disciplina" in request.form:
+            nome_disciplina = request.form["campo_disciplina"]
+        elif "botao_conclusao" in request.form:
+            nome_disciplina = request.form["botao_conclusao"]
+            alterar_conclusao = True
+        else:
+            return render_template(
+                "index.html",
+                placeholder="Digite o nome da disciplina",
+                disciplinas=tupla_disciplinas,
+            )
+        
         try:
             indice = pegar_indice(nome_disciplina)
             disciplina = Disciplina(indice)
+            if alterar_conclusao:
+                print("==> Alterando conclusão da disciplina")
+                disciplina.alterar_conclusao()
         except:
             return render_template(
                 "index.html",

@@ -14,13 +14,15 @@
 
 <h2>Afazeres</h2>
 
+- Melhorar o design da aplicação;
+
+- Ajeitar o botão de conclusão de disciplina.
+
+<h2>Concluído</h2>
+
 - Melhorar a formatação das saídas;
 
 - Adicionar forma de alterar a conclusão da disciplina (concluída ou não concluída);
-
-- Melhorar o design da aplicação.
-
-<h2>Concluído</h2>
 
 - Melhorar a forma como a disciplina é pesquisada;
 
