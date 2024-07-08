@@ -46,11 +46,13 @@
             </div>
             <div class="info__subject info__recommendation">
                 <span>Recomendações: </span>
-                <ul>
-                    {% for disciplina in recomendacao %}
-                    <li>{{disciplina}}</li>
-                    {% endfor %}
-                </ul>
+                <div class="recommendation__subjects">
+                    <ul>
+                        {% for disciplina in recomendacao %}
+                        <li>{{disciplina}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -68,7 +70,7 @@
                 <div class="content__title">
                     <span>Ementa</span>
                 </div>
-                <div class="content__text content__box">
+                <div class="content__text">
                     {% for topic in ementa %}
                     <span>{{topic}}</span>
                     {% endfor %}
@@ -86,90 +88,5 @@
             </div>
         </div>
     </main>
-    <!-- <header>
-        <div class="top">
-            <div class="info info__search">
-                
-                <div class="list-container">
-                    <div class="list-field" id="list-field"></div>
-                </div>
-                
-            </div>
-            <div class="info">
-                <div class="info__title">
-                    <span>TPEI</span>
-                </div>
-                <div class="info__data">
-                    <span>{{tpei}}</span>
-                </div>
-            </div>
-            <div class="info">
-                <div class="info__title">
-                    <span>Código</span>
-                </div>
-                <div class="info__data">
-                    <span>{{codigo}}</span>
-                </div>
-            </div>
-            <div class="info">
-                <div class="info__title">
-                    <span>Concluída</span>
-                </div>
-                <div class="info__data">
-                    <span>{{concluida}}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="bottom">
-            <div class="info__title">
-                <span>Recomendações</span>
-            </div>
-            <div class="info__data info__recommendation">
-                <span>{{recomendacao}}</span>
-            </div>
-        </div>
-    </header>
-
-    <main>
-        <div class="main__left">
-            <div class="main__content left">
-                <div class="title">
-                    <span>Ementa</span>
-                </div>
-                <div class="content">
-                    {% for topic in ementa %}
-                    <span>{{topic}}</span>
-                    {% endfor %}
-                </div>
-
-            </div>
-        </div>
-
-        <div class="main__right">
-            <div class="main__content">
-                <div class="title">
-                    <span>Objetivos</span>
-                </div>
-                <div class="content">
-                    <span>{{objetivos}}</span>
-                </div>
-            </div>
-            <div class="main__content">
-                <div class="title">
-                    {% if  placeholder != "Digite o nome da disciplina" %}
-                    <span>Recomendam {{placeholder}}</span>
-                    {% else %}
-                    <span>Recomendam</span>
-                    {% endif %}
-                </div>
-                <div class="content recomendam">
-                    {% for disciplina in recomendam %}
-                    <li>{{disciplina}}</li>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </main> -->
 </body>
 </html>

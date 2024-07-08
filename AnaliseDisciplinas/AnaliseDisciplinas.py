@@ -8,7 +8,7 @@ from flask import Flask, render_template, request
 ROOT_PATH = Path(__file__).parent
 
 app = Flask(__name__)
-conexao = sqlite3.connect(    ROOT_PATH / "catalogo_disciplinas.sqlite", check_same_thread=False)
+conexao = sqlite3.connect(ROOT_PATH / "catalogo_disciplinas.sqlite", check_same_thread=False)
 cursor = conexao.cursor()
 tupla_disciplinas = tuple()
 
@@ -59,6 +59,9 @@ class Disciplina:
             return ["Nenhuma disciplina recomenda esta disciplina"]
         else:
             return recomendam
+        
+    def conclusao_formatada(self) -> str:
+        return "Sim" if self.concluida == "S" else "Não"
 
 
 # Lista o nome de todas as disciplinas do banco de dados
@@ -71,7 +74,7 @@ def listar_disciplinas() -> tuple:
     return tupla_disciplinas
 
 
-# Busca o índice da disciplina na tabela do Excel
+# Busca o índice da disciplina no banco de dados
 # //////////////////////////////////////////////////////////
 def pegar_indice(nome) -> int:
     indice = cursor.execute(
@@ -103,7 +106,7 @@ def home():
             placeholder=disciplina.nome,
             tpei=disciplina.tpei,
             codigo=disciplina.sigla,
-            concluida=disciplina.concluida,
+            concluida=disciplina.conclusao_formatada(),
             recomendacao=disciplina.recomendacao_formatada(),
             ementa=disciplina.ementa_formatada(),
             objetivos=disciplina.objetivos_formatados(),
