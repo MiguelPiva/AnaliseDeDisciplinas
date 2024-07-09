@@ -55,6 +55,18 @@ body .info .info__recommendation .recommendation__subjects {
     padding-right: 5px;
 }
 
+body .btn_conclusion {
+    color: rgb(244, 255, 148);
+    font-size: 21px;
+    border: none;
+    background-color: #0b3110;
+    padding: 15px 35px 15px 35px;
+}
+
+body .btn_conclusion:hover {
+    background-color: #11551a;
+}
+
 main{
     display: flex;
     flex-direction: column;

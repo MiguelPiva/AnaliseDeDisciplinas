@@ -50,7 +50,7 @@ class Disciplina:
         else:
             return self.objetivos
 
-    def procurar_recomendam(self) -> tuple:
+    def procurar_recomendam(self) -> list:
         cursor.execute(
             'SELECT nome FROM disciplinas WHERE recomendacao LIKE (?);',
             (f"%{self.nome}%",)
@@ -65,8 +65,8 @@ class Disciplina:
         return "Sim" if self.concluida == "S" else "Não"
     
     def alterar_conclusao(self) -> None:
-        conclusao = "S" if self.concluida == "N" else "N"
-        cursor.execute("UPDATE disciplinas SET concluida = (?) WHERE id = (?);", (conclusao, self.indice))
+        self.concluida = "S" if self.concluida == "N" else "N"
+        cursor.execute("UPDATE disciplinas SET concluida = (?) WHERE id = (?);", (self.concluida, self.indice))
         conexao.commit()
         return
 

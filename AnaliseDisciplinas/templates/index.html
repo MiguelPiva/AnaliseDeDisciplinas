@@ -12,53 +12,55 @@
 </head>
 
 <body>
-    <div class="sidebar">
-        <form action="{{url_for('home')}}" method="POST">
-            <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina" autocomplete="family-name" id="tags">
-        </form>
-        <div class="list-field" id="list-field"></div>
-        <script class="autocomplete-list"> 
-            $( function() { 
-                var availableTags = [ 
-                    {% for disciplina in disciplinas %} 
-                        "{{ disciplina }}", 
-                    {% endfor %}
-                ]; 
-                $( "#tags" ).autocomplete({ 
-                    source: availableTags,
-                    appendTo: "#list-field",
-                });
-            }); 
-        </script>
-
-        <div class="info">
-            <div class="info__subject">
-                <span>Código: </span>
-                <span>{{codigo}}</span>
-            </div>
-            <div class="info__subject">
-                <span>TPEI: </span>
-                <span>{{tpei}}</span>
-            </div>
-            <div class="info__subject">
-                <span>Concluída: </span>
-                <span>{{concluida}}</span>
-            </div>
-            <div class="info__subject info__recommendation">
-                <span>Recomendações: </span>
-                <div class="recommendation__subjects">
-                    <ul>
-                        {% for disciplina in recomendacao %}
-                        <li>{{disciplina}}</li>
+    <div class="side">
+        <div class="sidebar">
+            <form action="{{url_for('home')}}" method="POST">
+                <input type="text" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{placeholder}}" value="" name="campo_disciplina" autocomplete="family-name" id="tags">
+            </form>
+            <div class="list-field" id="list-field"></div>
+            <script class="autocomplete-list"> 
+                $( function() { 
+                    var availableTags = [ 
+                        {% for disciplina in disciplinas %} 
+                            "{{ disciplina }}", 
                         {% endfor %}
-                    </ul>
+                    ]; 
+                    $( "#tags" ).autocomplete({ 
+                        source: availableTags,
+                        appendTo: "#list-field",
+                    });
+                }); 
+            </script>
+
+            <div class="info">
+                <div class="info__subject">
+                    <span>Código: </span>
+                    <span>{{codigo}}</span>
+                </div>
+                <div class="info__subject">
+                    <span>TPEI: </span>
+                    <span>{{tpei}}</span>
+                </div>
+                <div class="info__subject">
+                    <span>Concluída: </span>
+                    <span>{{concluida}}</span>
+                </div>
+                <div class="info__subject info__recommendation">
+                    <span>Recomendações: </span>
+                    <div class="recommendation__subjects">
+                        <ul>
+                            {% for disciplina in recomendacao %}
+                            <li>{{disciplina}}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <form action="{{url_for('home')}}" method="POST" class="form">
-        <button text="Concluir" name="botao_conclusao" value="{{placeholder}}"></button>
+        <form action="{{url_for('home')}}" method="POST" class="form">
+            <button text="Concluir" name="botao_conclusao" value="{{placeholder}}" class="btn_conclusion">Alterar conclusão</button>
         </form>
+    </div>
     <main>
         <div class="top-content">
             <div class="top-content__title">
